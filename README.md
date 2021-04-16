@@ -170,13 +170,44 @@
 
 - Variables are three types.
 
-1. values types: value can be assigned. e.g: primitive types.
-2. reference types: saves the location of memory where the variabe is. e.g: `object`, `string`, `dynamic` are reference.
-3. pointer types: same as c++.
+  1. values types: value can be assigned. e.g: primitive types.
+  2. reference types: saves the location of memory where the variabe is. e.g: `object`, `string`, `dynamic` are reference.
+  3. pointer types: same as c++.
 
 - The Object Type is the ultimate base class for all data types in C# Common Type System (CTS). When a value type is converted to object type, it is called boxing and on the other hand, when an object type is converted to a value type, it is called unboxing.
 
 - We can save anyting in `dynamic` type variables.
+
   ```csharp
   dynamic <variable_name> = value;
   ```
+
+- Variable declaration.
+  ```csharp
+  <data_type> <variable_list>;
+  ```
+- Constants can't be altered later
+  ```csharp
+  const <data_type> <constant_name> = value;
+  ```
+- Operators are same as c++.
+
+- Decision making same as c++.
+
+  ```csharp
+  // switch
+  switch(x)
+  {
+      case 1:
+          Console.WriteLine("one");
+          break;
+      case 2:
+          Console.WriteLine("two");
+          break;
+      default:
+          Console.WriteLine("> 2");
+          break;
+  }
+  ```
+
+- Loops are same as c++.
