@@ -118,3 +118,65 @@
     //...
   }
   ```
+
+- Organize namespaces with a clearly defined structure
+  ```csharp
+  // Examples
+  namespace Company.Product.Module.SubModule
+  namespace Product.Module.Component
+  namespace Product.Layer.Module.Group
+  ```
+- Vertically align curly brackets.
+
+- Declare all member variables at the top of a class, with **static variables at the very top**.
+
+- Place comments in a separate line, not with the same line of code. Begin with an uppercase letter. End with a period. Insert one space between `//` and the start of comment.
+
+- Use string interpolation to concatenate short strings, as shown in the following code.
+  ```csharp
+  string displayName = $"{nameList[n].LastName}, {nameList[n].FirstName}";
+  ```
+- Interpolated string works like js. in js we use,
+
+  ```js
+  `${var name}`
+  ```
+
+  in c# we will use,
+
+  ```csharp
+  $"hello world {var_name}"
+  ```
+
+- Basic code structure
+
+  ```csharp
+  using namespace_name1;
+  using namespace_name2;
+  ...
+  using namespace_nameN;
+
+  namespace applicationName
+  {
+    class ClassName
+    {
+      static void Main(string[] args)
+      {
+
+      }
+    }
+  }
+  ```
+
+- Variables are three types.
+
+1. values types: value can be assigned. e.g: primitive types.
+2. reference types: saves the location of memory where the variabe is. e.g: `object`, `string`, `dynamic` are reference.
+3. pointer types: same as c++.
+
+- The Object Type is the ultimate base class for all data types in C# Common Type System (CTS). When a value type is converted to object type, it is called boxing and on the other hand, when an object type is converted to a value type, it is called unboxing.
+
+- We can save anyting in `dynamic` type variables.
+  ```csharp
+  dynamic <variable_name> = value;
+  ```
