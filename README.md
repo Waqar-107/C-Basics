@@ -211,3 +211,63 @@
   ```
 
 - Loops are same as c++.
+
+- An assembly is a collection of types and resources that are built to work together and form a logical unit of functionality. Assemblies take the form of executable (.exe) or dynamic link library (.dll) files, and are the building blocks of .NET applications.
+
+- Encapsulation is defined 'as the process of enclosing one or more items within a physical or logical package'. Encapsulation is implemented by using access specifiers.
+
+  1. public - the type or member can be accessed by any other code in the same assembly or another assembly that references it.
+  2. private - the type or member can be accessed only by code in the same class or struct.
+  3. protected - The type or member can be accessed only by code in the same class, or in a class that is derived from that class.
+  4. internal - The type or member can be accessed by any code in the same assembly, but not from another assembly.
+  5. protected internal - The type or member can be accessed by any code in the assembly in which it's declared, or from within a derived class in another assembly.
+  6. private protected - The type or member can be accessed only within its declaring assembly, by code in the same class or in a type that is derived from that class.
+
+- Methods.
+
+  ```csharp
+  <Access Specifier> <Return Type> <Method Name>(Parameter List) {
+    Method Body
+  }
+  ```
+
+  parameters can be of 3 types.
+
+  1. value:
+
+  ```csharp
+  public void swap(int x, int y) {}
+
+  swap(x, y)
+  ```
+
+  2. reference:
+
+  ```csharp
+  public void swap(ref int x, ref int y) {
+    int temp;
+
+    temp = x; /* save the value of x */
+    x = y;    /* put y into x */
+    y = temp; /* put temp into y */
+  }
+
+  int a = 100;
+  int b = 200;
+
+  swap(ref a, ref b);
+  ```
+
+  3. output: A return statement can be used for returning only one value from a function. However, using output parameters, you can return two values from a function.
+
+  ```csharp
+  void getValue(out int x ) {
+      int temp = 5;
+      x = temp;
+  }
+
+  int a = 100;
+  getValue(out a);
+  ```
+
+- C# provides a special data types, the nullable types, to which you can assign normal range of values as well as null values.
