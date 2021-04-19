@@ -212,6 +212,15 @@
 
 - Loops are same as c++.
 
+  ```csharp
+  int[] arr3 = { 1, 2, 3, 4, 5 };
+
+  foreach(int e in arr3)
+  {
+      Console.WriteLine(e);
+  }
+  ```
+
 - An assembly is a collection of types and resources that are built to work together and form a logical unit of functionality. Assemblies take the form of executable (.exe) or dynamic link library (.dll) files, and are the building blocks of .NET applications.
 
 - Encapsulation is defined 'as the process of enclosing one or more items within a physical or logical package'. Encapsulation is implemented by using access specifiers.
@@ -270,4 +279,189 @@
   getValue(out a);
   ```
 
-- C# provides a special data types, the nullable types, to which you can assign normal range of values as well as null values.
+- C# provides a special data types, the nullable types, to which you can assign normal range of values as well as null values. `< data_type> ? <variable_name> = null;`
+
+  ```csharp
+  int? num1 = null;
+  int? num2 = 11;
+
+  double? num3 = new double?();
+  ```
+
+- The null coalescing operator is used with the nullable value types and reference types. `first ?? second`. If first is null then the second number is returned.
+
+  ```csharp
+  num1 = num2 ?? 5.3;
+  ```
+
+- Array can be declared by, `datatype[] arrayName;`.
+
+  Declaration and initialization examples,
+
+  ```csharp
+  int[] arr = new int[4] { 1, 2, 5, 6};
+
+  int[] arr2;
+  arr2 = new int[10];
+
+  int[] arr3 = { 1, 2, 3, 4, 5 };
+  ```
+
+  Multi-dimensional can be declared as `a[,]`, `a[,,]`. Can be declared using `comma` and accessed using `comma`.
+
+  ```csharp
+  int[,] a = new int[3, 4] {
+      {0, 1, 2, 3} ,
+      {4, 5, 6, 7} ,
+      {8, 9, 10, 11}
+  };
+
+  // this will print 6
+  Console.WriteLine(a[1, 2]);
+  ```
+
+- A `jagged array` is an array of arrays.
+
+  ```csharp
+  int[][] arr = new int[5][];
+
+  for(int i = 0; i < 5; i++)
+  {
+      arr[i] = new int[i + 1];
+      for (int j = 0; j <= i; j++)
+          arr[i][j] = j + 1;
+  }
+
+  for(int i = 0; i < 5; i++)
+  {
+      for(int j = 0; j < arr[i].Length; j++)
+          Console.Write(arr[i][j] + " ");
+
+      Console.WriteLine();
+  }
+
+  // this will print
+  // 1
+  // 1 2
+  // 1 2 3
+  // 1 2 3 4
+  // 1 2 3 4 5
+  ```
+
+- Array can be passed in functions too.
+
+  ```csharp
+  public static void foo(int[,] arr)
+  ```
+
+- We can pass array of params in a function.
+
+  ```csharp
+  public static int AddElements(params int[] arr) {}
+
+  int sum = AddElements(1, 2, 3, 4, 6, 7, 0);
+  ```
+
+- Strings can be handled like c++. Also, can be created from array of chars.
+
+  ```csharp
+  char[] letters = { 'H', 'e', 'l', 'l', 'o' };
+  string s = new string(letters);
+
+  Console.WriteLine(letters);
+  ```
+
+  Some useful methods of string are as following,
+
+  1. comparing:
+
+     ```csharp
+     string s1 = "aab";
+     string s2 = "aba";
+
+     // a.CompareTo(b)
+     // returns -1 when a < b
+     // returns 0 when a == b
+     // returns 1 when a > b
+     Console.WriteLine(s1.CompareTo(s2));
+     ```
+
+  2. contains: `a.Contains(b)`
+  3. sub-string: `a.Substring(startIndex, length)`
+  4. joining: `String.Join("\n", string_array);`
+
+- Structures in c# are a bit different than c++. Can be defined using `struct`.
+
+  ```csharp
+  struct Books
+  {
+    // variable declarations
+    // constructor if any
+    // methods
+  };
+
+  // declare struct variable
+  Books book1;
+
+  // can be accessed like
+  book1.name = "";
+  ```
+
+  1. There is no default constructor. If we declare one then **we must initialize all the variables inside**.
+  2. Can't implement any interface.
+  3. Can't be extended.
+  4. structs are value types unlike classes which are reference types.
+
+- An enumeration is a set of named integer constants. An enumerated type is declared using the enum keyword.
+
+  ```csharp
+  enum <enum_name> {
+    enumeration list
+  };
+
+  enum Days {sun, mon, tues, wed, thurs, fri, sat};
+
+  // sun will have value 0, mon will have 1, and so on
+  ```
+
+- Class
+
+  ```csharp
+  <access specifier> class  class_name {
+   // member variables
+   <access specifier> <data type> variable1;
+   <access specifier> <data type> variable2;
+   ...
+   <access specifier> <data type> variableN;
+   // member methods
+   <access specifier> <return type> method1(parameter_list) {
+      // method body
+   }
+   <access specifier> <return type> method2(parameter_list) {
+      // method body
+   }
+   ...
+   <access specifier> <return type> methodN(parameter_list) {
+      // method body
+   }
+  }
+  ```
+
+  **If not specified, the access specifier of the class is internal and if the specifier of the member variables are not defined then they are private**
+
+  constructor of the classes can be of two types,
+
+  1. default, without any parameters
+  2. parameterized, with params
+
+  There can be more than one construtor with different params. When initialized, the one with the matching params is called.
+
+  A destructor is a special member function of a class that is executed whenever an object of its class goes out of scope. A destructor has exactly the same name as that of the class with a prefixed tilde (~) and it can neither return a value nor can it take any parameters.
+
+  Destructor can be very useful for releasing memory resources before exiting the program. Destructors cannot be inherited or overloaded.
+
+  Static variables inside a class means, no matter how many objects we create that variable will be the same across all.
+
+  Static functions can be called without creating an object, like `ClassName.FunctionName()`. Static functions can use only the static variables.
+
+  **C# does not allow multiple inheritance, but we can use interface to meet this need**
