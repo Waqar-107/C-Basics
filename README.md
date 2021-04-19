@@ -267,7 +267,7 @@
   swap(ref a, ref b);
   ```
 
-  3. output: A return statement can be used for returning only one value from a function. However, using output parameters, you can return two values from a function.
+  3. output: A return statement can be used for returning only one value from a function. However, using output parameters, we can return two values from a function.
 
   ```csharp
   void getValue(out int x ) {
@@ -279,7 +279,7 @@
   getValue(out a);
   ```
 
-- C# provides a special data types, the nullable types, to which you can assign normal range of values as well as null values. `< data_type> ? <variable_name> = null;`
+- C# provides a special data types, the nullable types, to which we can assign normal range of values as well as null values. `< data_type> ? <variable_name> = null;`
 
   ```csharp
   int? num1 = null;
@@ -550,7 +550,7 @@
   }
   ```
 
-  You can throw an object if it is either directly or indirectly derived from the System.Exception class. You can use a throw statement in the catch block to throw the present object as −
+  we can throw an object if it is either directly or indirectly derived from the System.Exception class. we can use a throw statement in the catch block to throw the present object as −
 
   ```csharp
   catch(Exception e) {
@@ -560,7 +560,7 @@
   ```
 
 - The FileStream class in the System.IO namespace helps in reading from, writing to and closing files.
-  You need to create a FileStream object to create a new file or open an existing file. The syntax for creating a FileStream object is as follows −
+  we need to create a FileStream object to create a new file or open an existing file. The syntax for creating a FileStream object is as follows −
 
   ```csharp
   FileStream <object_name> = new FileStream( <file_name>, <FileMode Enumerator>,
@@ -572,7 +572,7 @@
 
 - Attributes
 
-- Reflection objects are used for obtaining type information at runtime. The classes that give access to the metadata of a running program are in the System.Reflection namespace. The `System.Reflection` namespace contains classes that allow you to obtain information about the application and to dynamically add types, values, and objects to the application.
+- Reflection objects are used for obtaining type information at runtime. The classes that give access to the metadata of a running program are in the System.Reflection namespace. The `System.Reflection` namespace contains classes that allow we to obtain information about the application and to dynamically add types, values, and objects to the application.
 
 - Properties are named members of classes, structures, and interfaces. Member variables or methods in a class or structures are called Fields. Properties are an extension of fields and are accessed using the same syntax. They use accessors through which the values of the private fields can be read, written or manipulated.
 
@@ -639,7 +639,7 @@
   }
   ```
 
-- An indexer allows an object to be indexed such as an array. When you define an indexer for a class, this class behaves similar to a `virtual array`. You can then access the instance of this class using the array access operator `[]`. Properties return or set a specific data member, whereas indexers returns or sets a particular value from the object instance. In other words, it breaks the instance data into smaller parts and indexes each part, gets or sets each part.
+- An indexer allows an object to be indexed such as an array. When we define an indexer for a class, this class behaves similar to a `virtual array`. we can then access the instance of this class using the array access operator `[]`. Properties return or set a specific data member, whereas indexers returns or sets a particular value from the object instance. In other words, it breaks the instance data into smaller parts and indexes each part, gets or sets each part.
 
   **Indexers can also be declared with multiple parameters and each parameter may be a different type. It is not necessary that the indexes have to be integers.**
 
@@ -659,3 +659,30 @@
   }
   }
   ```
+
+- A delegate is a reference type variable that holds the reference to a method. The reference can be changed at runtime.
+
+  Delegates are especially used for implementing events and the call-back methods. All delegates are implicitly derived from the System.Delegate class.
+
+  A delegate can refer to a method, which has the same signature as that of the delegate. A function having the same return type and parameters can use the delegate.
+
+  ```csharp
+  delegate <return type> <delegate-name> <parameter list>
+
+  // initialize functions
+  delegateName objName = new delegateName(functionName)
+  ```
+
+  Delegate objects can be composed using the `+` operator. A composed delegate calls the two delegates it was composed from. Only delegates of the same type can be composed. The `-` operator can be used to remove a component delegate from a composed delegate.
+
+  Using this property of delegates we can create an invocation list of methods that will be called when a delegate is invoked. This is called multicasting of a delegate.
+
+  When we multicast, the functions added are called sequentially with the same parameter.
+
+- Events are user actions such as key press, clicks, mouse movements, etc., or some occurrence such as system generated notifications. Applications need to respond to events when they occur. For example, interrupts. Events are used for inter-process communication.
+
+  The events are declared and raised in a class and associated with the event handlers using delegates within the same class or some other class. The class containing the event is used to publish the event. This is called the publisher class. Some other class that accepts this event is called the subscriber class. Events use the publisher-subscriber model.
+
+  A publisher is an object that contains the definition of the event and the delegate. The event-delegate association is also defined in this object. A publisher class object invokes the event and it is notified to other objects.
+
+  A subscriber is an object that accepts the event and provides an event handler. The delegate in the publisher class invokes the method (event handler) of the subscriber class.
