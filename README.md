@@ -505,3 +505,135 @@
   ```csharp
   public static return_type_which_is_the_class operator"operator sign without the quotes"(){}
   ```
+
+- An interface is defined as a syntactical contract that all the classes inheriting the interface should follow. The interface defines the 'what' part of the syntactical contract and the deriving classes define the 'how' part of the syntactical contract.
+
+  ```csharp
+  public interface InterfaceName
+  {
+    // methods
+  }
+
+  class ClassName : InterfaceName
+  {
+    // variables
+    // own methods
+    // implementations of the methods that are declared in the interface
+  }
+  ```
+
+- A namespace is designed for providing a way to keep one set of names separate from another. The class names declared in one namespace does not conflict with the same class names declared in another.
+
+  ```csharp
+  namespace namespace_name {
+   // code declarations
+  }
+  ```
+
+  To call the namespace-enabled version of either function or variable, prepend the namespace name as follows − `namespace_name.item_name;`. We can also use `using namespace_name` but in that case class name may collide. If two namespace have classes with the same name then it will be ambiguous.
+
+- The preprocessor directives give instruction to the compiler to preprocess the information before actual compilation starts. Starts with a `#`, e.g: `#define`, `#if`, `elif`, `else`
+
+- An exception is a problem that arises during the execution of a program. A C# exception is a response to an exceptional circumstance that arises while a program is running, such as an attempt to divide by zero.
+
+  ```csharp
+  try {
+   // statements causing exception
+  } catch( ExceptionName e1 ) {
+   // error handling code
+  } catch( ExceptionName e2 ) {
+   // error handling code
+  } catch( ExceptionName eN ) {
+   // error handling code
+  } finally {
+   // statements to be executed
+  }
+  ```
+
+  You can throw an object if it is either directly or indirectly derived from the System.Exception class. You can use a throw statement in the catch block to throw the present object as −
+
+  ```csharp
+  catch(Exception e) {
+   ...
+   throw e
+  }
+  ```
+
+- The FileStream class in the System.IO namespace helps in reading from, writing to and closing files.
+  You need to create a FileStream object to create a new file or open an existing file. The syntax for creating a FileStream object is as follows −
+
+  ```csharp
+  FileStream <object_name> = new FileStream( <file_name>, <FileMode Enumerator>,
+   <FileAccess Enumerator>, <FileShare Enumerator>);
+
+  FileStream F = new FileStream("sample.txt", FileMode.Open, FileAccess.Read,
+  FileShare.Read);
+  ```
+
+- Attributes
+
+- Reflection objects are used for obtaining type information at runtime. The classes that give access to the metadata of a running program are in the System.Reflection namespace. The `System.Reflection` namespace contains classes that allow you to obtain information about the application and to dynamically add types, values, and objects to the application.
+
+- Properties are named members of classes, structures, and interfaces. Member variables or methods in a class or structures are called Fields. Properties are an extension of fields and are accessed using the same syntax. They use accessors through which the values of the private fields can be read, written or manipulated.
+  ```csharp
+  using System;
+  namespace tutorialspoint {
+    class Student {
+        private string code = "N.A";
+        private string name = "not known";
+        private int age = 0;
+
+        // Declare a Code property of type string:
+        public string Code {
+          get {
+              return code;
+          }
+          set {
+              code = value;
+          }
+        }
+
+        // Declare a Name property of type string:
+        public string Name {
+          get {
+              return name;
+          }
+          set {
+              name = value;
+          }
+        }
+
+        // Declare a Age property of type int:
+        public int Age {
+          get {
+              return age;
+          }
+          set {
+              age = value;
+          }
+        }
+        public override string ToString() {
+          return "Code = " + Code +", Name = " + Name + ", Age = " + Age;
+        }
+    }
+
+    class ExampleDemo {
+        public static void Main() {
+
+          // Create a new Student object:
+          Student s = new Student();
+
+          // Setting code, name and the age of the student
+          s.Code = "001";
+          s.Name = "Zara";
+          s.Age = 9;
+          Console.WriteLine("Student Info: {0}", s);
+
+          //let us increase age
+          s.Age += 1;
+          Console.WriteLine("Student Info: {0}", s);
+          Console.ReadKey();
+        }
+    }
+  }
+  ```
