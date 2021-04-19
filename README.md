@@ -575,6 +575,7 @@
 - Reflection objects are used for obtaining type information at runtime. The classes that give access to the metadata of a running program are in the System.Reflection namespace. The `System.Reflection` namespace contains classes that allow you to obtain information about the application and to dynamically add types, values, and objects to the application.
 
 - Properties are named members of classes, structures, and interfaces. Member variables or methods in a class or structures are called Fields. Properties are an extension of fields and are accessed using the same syntax. They use accessors through which the values of the private fields can be read, written or manipulated.
+
   ```csharp
   using System;
   namespace tutorialspoint {
@@ -635,5 +636,26 @@
           Console.ReadKey();
         }
     }
+  }
+  ```
+
+- An indexer allows an object to be indexed such as an array. When you define an indexer for a class, this class behaves similar to a `virtual array`. You can then access the instance of this class using the array access operator `[]`. Properties return or set a specific data member, whereas indexers returns or sets a particular value from the object instance. In other words, it breaks the instance data into smaller parts and indexes each part, gets or sets each part.
+
+  **Indexers can also be declared with multiple parameters and each parameter may be a different type. It is not necessary that the indexes have to be integers.**
+
+  **Defining a property involves providing a property name. Indexers are not defined with names, but with the this keyword, which refers to the object instance**
+
+  ```csharp
+  element-type this[int index] {
+
+  // The get accessor.
+  get {
+      // return the value specified by index
+  }
+
+  // The set accessor.
+  set {
+      // set the value specified by index
+  }
   }
   ```
