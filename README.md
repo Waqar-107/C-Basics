@@ -465,3 +465,43 @@
   Static functions can be called without creating an object, like `ClassName.FunctionName()`. Static functions can use only the static variables.
 
   **C# does not allow multiple inheritance, but we can use interface to meet this need**
+
+- The word polymorphism means having many forms. In object-oriented programming paradigm, polymorphism is often expressed as 'one interface, multiple functions'. Can be static and dynamic. `Function Overloading` and `Operator Overloading` belongs to static and `abstract class and virtual functions` belong to dynamic.
+
+- Operator can be overloaded for classes.
+
+  ```csharp
+  class Box {
+    private double length;   // Length of a box
+    private double breadth;  // Breadth of a box
+    private double height;   // Height of a box
+
+    public double getVolume() {
+        return length * breadth * height;
+    }
+    public void setLength( double len ) {
+        length = len;
+    }
+    public void setBreadth( double bre ) {
+        breadth = bre;
+    }
+    public void setHeight( double hei ) {
+        height = hei;
+    }
+
+    // Overload + operator to add two Box objects.
+    public static Box operator+ (Box b, Box c) {
+        Box box = new Box();
+        box.length = b.length + c.length;
+        box.breadth = b.breadth + c.breadth;
+        box.height = b.height + c.height;
+        return box;
+    }
+  }
+  ```
+
+  So, the syntax is,
+
+  ```csharp
+  public static return_type_which_is_the_class operator"operator sign without the quotes"(){}
+  ```
