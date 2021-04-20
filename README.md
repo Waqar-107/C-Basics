@@ -13,6 +13,8 @@
 
 - The namespaces are maintained by `Assembley` which can be either an `EXE` or a `DLL`. DLL stands for `Dynamically Linked Library`.
 
+- The global namespace is the `root` namespace: `global::System` will always refer to the .NET System namespace.
+
 - Variables with `const` needs to be initialized when declared.
 
 - Float type needs `f` at the end of it. Otherwise it should be declared as Double`
@@ -48,6 +50,7 @@
   Console.writeLine("{0} {1}", var1, var2);
   ```
 - Type conversion can be of three types.
+
   1. Implicit - assigning variable of one type to another. possible if the new variables range is greater than the old. else there remains a chance of data loss which the compiler sensed and stops us from compiling.
   2. Explicit - casting.
      ```csharp
@@ -55,98 +58,6 @@
      int i = (int)f;
      ```
   3. Conversion between non-compatible types.
-
-# Coding Standards
-
-- Use `PascalCasing` for `class` and `method` names.
-- Use `camelCasing` for `local variable` and `method arguments`.
-- Do not use `Screaming Caps` for consts as they will grab too much attention.
-
-  ```csharp
-  // Correct
-  public static const string ShippingType = "DropShip";
-
-  // Avoid
-  public static const string SHIPPINGTYPE = "DropShip";
-  ```
-
-- Avoid using abbreviations like `emp` instead of `employee`, `grp` instead of `group`. Use abbreviations for `Id`, `Xml`, `Ftp`, `Uri`.
-
-- Use `PascalCasing` for abbreviations 3 characters or more. 2 char are both upper.
-
-- Do not use `_` in identifiers. **Exception: private static variables**.
-
-  ```csharp
-  // Correct
-  public DateTime clientAppointment;
-  public TimeSpan timeLeft;
-
-  // Avoid
-  public DateTime client_Appointment;
-  public TimeSpan time_Left;
-
-  // Exception
-  private DateTime _registrationDate;
-  ```
-
-- Use implicit type var for local variable declarations. Exception: primitive types (int, string, double, etc) use predefined names
-
-  ```csharp
-  var stream = File.Create(path);
-  var customers = new Dictionary();
-
-  // Exceptions
-  int index = 100;
-  string timeSheet;
-  bool isCompleted;
-  ```
-
-- Prefix `interfaces` with the letter `I`. Interface names are noun (phrases) or adjectives.
-
-- Name source files according to their main classes. Exception: file names with partial classes reflect their source or purpose, e.g. designer, generated, etc.
-
-  ```csharp
-  // Located in Task.cs
-  public partial class Task
-  {
-      //...
-  }
-
-  // Located in Task.generated.cs
-  public partial class Task
-  {
-    //...
-  }
-  ```
-
-- Organize namespaces with a clearly defined structure
-  ```csharp
-  // Examples
-  namespace Company.Product.Module.SubModule
-  namespace Product.Module.Component
-  namespace Product.Layer.Module.Group
-  ```
-- Vertically align curly brackets.
-
-- Declare all member variables at the top of a class, with **static variables at the very top**.
-
-- Place comments in a separate line, not with the same line of code. Begin with an uppercase letter. End with a period. Insert one space between `//` and the start of comment.
-
-- Use string interpolation to concatenate short strings, as shown in the following code.
-  ```csharp
-  string displayName = $"{nameList[n].LastName}, {nameList[n].FirstName}";
-  ```
-- Interpolated string works like js. in js we use,
-
-  ```js
-  `${var name}`
-  ```
-
-  in c# we will use,
-
-  ```csharp
-  $"hello world {var_name}"
-  ```
 
 - Basic code structure
 
@@ -187,9 +98,29 @@
   <data_type> <variable_list>;
   ```
 - Constants can't be altered later
+
   ```csharp
   const <data_type> <constant_name> = value;
   ```
+
+- `Tuple` can be used like pair in c++.
+
+- When a function returns a lot of value using a Tuple, using them like, `.Item1`, `.Item2` is cumbersome. We can use `deconstruction` here.
+
+  ```csharp
+  var (name, address, city, zip) = contact.GetAddressInfo();
+  (string city, int population, double area) = contact.GetAddressInfo();
+
+  // we can also use discards
+  (string city, _, double area) = contact.GetAddressInfo();
+  ```
+
+  In order to deconstruction with user defined class, we need to override a function called `Deconstruct`. The params will be `out` variables. Inside we just assign values.
+
+  ```csharp
+  public void Deconstruct(out string fname, out string lname){}
+  ```
+
 - Operators are same as c++.
 
 - Decision making same as c++.
@@ -686,3 +617,109 @@
   A publisher is an object that contains the definition of the event and the delegate. The event-delegate association is also defined in this object. A publisher class object invokes the event and it is notified to other objects.
 
   A subscriber is an object that accepts the event and provides an event handler. The delegate in the publisher class invokes the method (event handler) of the subscriber class.
+
+  ```csharp
+  public delegate string BoilerLogHandler(string str);
+
+  event BoilerLogHandler BoilerEventLog;
+  ```
+
+- Generics allow you to write a class or method that can work with any data type. `public class MyGenericArray<T>`. Here `T` can be any name.
+
+  **we can use generics with delegates too**
+
+  ```csharp
+  delegate T NumberChanger<T>(T n);
+  ```
+
+# Coding Standards
+
+- Use `PascalCasing` for `class` and `method` names.
+- Use `camelCasing` for `local variable` and `method arguments`.
+- Do not use `Screaming Caps` for consts as they will grab too much attention.
+
+  ```csharp
+  // Correct
+  public static const string ShippingType = "DropShip";
+
+  // Avoid
+  public static const string SHIPPINGTYPE = "DropShip";
+  ```
+
+- Avoid using abbreviations like `emp` instead of `employee`, `grp` instead of `group`. Use abbreviations for `Id`, `Xml`, `Ftp`, `Uri`.
+
+- Use `PascalCasing` for abbreviations 3 characters or more. 2 char are both upper.
+
+- Do not use `_` in identifiers. **Exception: private static variables**.
+
+  ```csharp
+  // Correct
+  public DateTime clientAppointment;
+  public TimeSpan timeLeft;
+
+  // Avoid
+  public DateTime client_Appointment;
+  public TimeSpan time_Left;
+
+  // Exception
+  private DateTime _registrationDate;
+  ```
+
+- Use implicit type var for local variable declarations. Exception: primitive types (int, string, double, etc) use predefined names
+
+  ```csharp
+  var stream = File.Create(path);
+  var customers = new Dictionary();
+
+  // Exceptions
+  int index = 100;
+  string timeSheet;
+  bool isCompleted;
+  ```
+
+- Prefix `interfaces` with the letter `I`. Interface names are noun (phrases) or adjectives.
+
+- Name source files according to their main classes. Exception: file names with partial classes reflect their source or purpose, e.g. designer, generated, etc.
+
+  ```csharp
+  // Located in Task.cs
+  public partial class Task
+  {
+      //...
+  }
+
+  // Located in Task.generated.cs
+  public partial class Task
+  {
+    //...
+  }
+  ```
+
+- Organize namespaces with a clearly defined structure
+  ```csharp
+  // Examples
+  namespace Company.Product.Module.SubModule
+  namespace Product.Module.Component
+  namespace Product.Layer.Module.Group
+  ```
+- Vertically align curly brackets.
+
+- Declare all member variables at the top of a class, with **static variables at the very top**.
+
+- Place comments in a separate line, not with the same line of code. Begin with an uppercase letter. End with a period. Insert one space between `//` and the start of comment.
+
+- Use string interpolation to concatenate short strings, as shown in the following code.
+  ```csharp
+  string displayName = $"{nameList[n].LastName}, {nameList[n].FirstName}";
+  ```
+- Interpolated string works like js. in js we use,
+
+  ```js
+  `${var name}`
+  ```
+
+  in c# we will use,
+
+  ```csharp
+  $"hello world {var_name}"
+  ```
