@@ -219,6 +219,21 @@
   double? num3 = new double?();
   ```
 
+- An anonymous method is a method without a name. Anonymous methods in C# can be defined using the delegate keyword and can be assigned to a variable of delegate type.
+
+  ```csharp
+  public delegate void Print(int value);
+
+  static void Main(string[] args)
+  {
+      Print print = delegate(int val) {
+          Console.WriteLine("Inside Anonymous method. Value: {0}", val);
+      };
+
+      print(100);
+  }
+  ```
+
 - The null coalescing operator is used with the nullable value types and reference types. `first ?? second`. If first is null then the second number is returned.
 
   ```csharp
@@ -610,6 +625,23 @@
 
   When we multicast, the functions added are called sequentially with the same parameter.
 
+- C# includes built-in generic delegate types `Func` and `Action`, so that we don't need to define custom delegates manually in most cases.
+
+  Func has 0 or more input, one output
+
+  ```csharp
+  public delegate TResult Func<in T, out TResult>(T arg);
+
+  // TResult: return type
+  // T is input type. in stands for input. out for the return
+  ```
+
+  Action delegate id the same except the fact that it doesn't return anything
+
+  ```csharp
+  Action<int> printActionDel = i => Console.WriteLine(i);
+  ```
+
 - Events are user actions such as key press, clicks, mouse movements, etc., or some occurrence such as system generated notifications. Applications need to respond to events when they occur. For example, interrupts. Events are used for inter-process communication.
 
   The events are declared and raised in a class and associated with the event handlers using delegates within the same class or some other class. The class containing the event is used to publish the event. This is called the publisher class. Some other class that accepts this event is called the subscriber class. Events use the publisher-subscriber model.
@@ -624,7 +656,7 @@
   event BoilerLogHandler BoilerEventLog;
   ```
 
-- Generics allow you to write a class or method that can work with any data type. `public class MyGenericArray<T>`. Here `T` can be any name.
+- Generics allow we to write a class or method that can work with any data type. `public class MyGenericArray<T>`. Here `T` can be any name.
 
   **we can use generics with delegates too**
 
