@@ -634,6 +634,9 @@
 
   // TResult: return type
   // T is input type. in stands for input. out for the return
+
+  // with lambda
+  Func<int> getRandomNumber = () => new Random().Next(1, 100);
   ```
 
   Action delegate id the same except the fact that it doesn't return anything
