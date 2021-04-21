@@ -199,3 +199,172 @@ var filteredResult = studentList.Where((s, i) => {
   ```
 
 - The Select operator always returns an IEnumerable collection which contains elements based on a transformation function. It is similar to the Select clause of SQL that produces a flat result set.
+
+  ```csharp
+  var selectResult = studentList.Select(s => new { Name = s.StudentName ,
+                                                 Age = s.Age  });
+  ```
+
+- The quantifier operators evaluate elements of the sequence on some condition and return a boolean value to indicate that some or all elements satisfy the condition.
+
+  1. All
+
+  ```csharp
+  bool areAllStudentsTeenAger = studentList.All(s => s.Age > 12 && s.Age < 20);
+  ```
+
+  2. Any
+
+  ```csharp
+  bool isAnyStudentTeenAger = studentList.Any(s => s.age > 12 && s.age < 20);
+  ```
+
+  3. Contains
+
+  ```csharp
+  bool result = studentList.Contains(std);
+
+  // with a custom comparator
+  bool result = studentList.Contains(std, new StudentComparer());
+  ```
+
+- Average
+
+  ```csharp
+  var avgAge = studentList.Average(s => s.Age);
+  ```
+
+- The Count operator returns the number of elements in the collection or number of elements that have satisfied the given condition.
+
+  ```csharp
+  var totalStudents = studentList.Count();
+  var adultStudents = studentList.Count(s => s.Age >= 18);
+  ```
+
+- The Max() method returns the largest numeric element from a collection.
+
+  ```csharp
+  var largest = intList.Max();
+
+  var largestEvenElements = intList.Max(i => {
+  		                        if(i%2 == 0)
+  			                        return i;
+
+  		                        return 0;
+  	                        });
+
+  // use custom comparator in class to get the max
+  public class Student : IComparable<Student>
+  {
+      public int StudentID { get; set; }
+      public string StudentName { get; set; }
+      public int Age { get; set; }
+      public int StandardID { get; set; }
+
+      public int CompareTo(Student other)
+      {
+          if (this.StudentName.Length >= other.StudentName.Length)
+              return 1;
+
+          return 0;
+      }
+  }
+  ```
+
+- The Sum() method calculates the sum of numeric items in the collection.
+
+  ```csharp
+  var sumOfEvenElements = intList.Sum(i => {
+  		                    if(i%2 == 0)
+  			                    return i;
+
+  		                    return 0;
+  	                        });
+  ```
+
+- Element operators return a particular element from a sequence (collection).
+
+  The ElementAt() method returns an element from the specified index from a given collection. If the specified index is out of the range of a collection then it will throw an Index out of range exception. Please note that index is a zero based index.
+
+  The ElementAtOrDefault() method also returns an element from the specified index from a collaction and if the specified index is out of range of a collection then it will return a default value of the data type instead of throwing an error.
+
+- `First()`, `FirstOrDefault()`, `Last()`, `LastOrDefault()` works like ElementAt().
+
+- `Single()` and `SingleOrDefault()` works like the preceedings but gives error if there's more than one elment to return.
+
+- There is only one equality operator: SequenceEqual. The SequenceEqual method checks whether the number of elements, value of each element and order of elements in two collections are equal or not.
+
+  ```csharp
+  bool isEqual = strList1.SequenceEqual(strList2);
+  ```
+
+  The SequenceEqual extension method checks the references of two objects to determine whether two sequences are equal or not. This may give wrong result.To compare the values of two collection of complex type (reference type or object), you need to implement IEqualityComperar<T> interface as shown below.
+
+  ```csharp
+  class StudentComparer : IEqualityComparer<Student>
+  {
+      public bool Equals(Student x, Student y)
+      {
+          if (x.StudentID == y.StudentID && x.StudentName.ToLower() == y.StudentName.ToLower())
+              return true;
+
+          return false;
+      }
+
+      public int GetHashCode(Student obj)
+      {
+          return obj.GetHashCode();
+      }
+  }
+  ```
+
+- The Concat() method appends two sequences of the same type and returns a new sequence (collection).
+
+  ```csharp
+  var collection3 = collection1.Concat(collection2);
+  ```
+
+- The DefaultIfEmpty() method returns a new collection with the default value if the given collection on which DefaultIfEmpty() is invoked is empty.
+
+  Another overload method of DefaultIfEmpty() takes a value parameter that should be replaced with default value.
+
+  ```csharp
+  var newList1 = emptyList.DefaultIfEmpty();
+  var newList2 = emptyList.DefaultIfEmpty("None");
+  ```
+
+- The Range() method returns a collection of IEnumerable<T> type with specified number of elements and sequential values starting from the first element.
+
+  ```csharp
+  // returns from 10 to 20
+  var intCollection = Enumerable.Range(10, 10);
+  ```
+
+- The Repeat() method generates a collection of IEnumerable<T> type with specified number of elements and each element contains same specified value.
+
+  ```csharp
+  // returns 10 five times
+  var intCollection = Enumerable.Repeat<int>(10, 5);
+  ```
+
+- The Distinct extension method returns a new collection of unique elements from the given collection.
+
+  ```csharp
+  var distinctList1 = strList.Distinct();
+  ```
+
+  The Distinct extension method doesn't compare values of complex type objects. You need to implement IEqualityComparer<T> interface in order to compare the values of complex types.
+
+- `Except()` works in the same way.
+
+- `Intersect()` works in the same way.
+
+- `Union()` works in the same way.
+
+- The Skip() method skips the specified number of element starting from first element and returns rest of the elements. `.Skip(val)`.
+
+- `SkipWhile()` extension method in LINQ skip elements in the collection till the specified condition is true. It returns a new collection that includes all the remaining elements once the specified condition becomes false for any element.
+
+- The Take() extension method returns the specified number of elements starting from the first element. `.Take(val)`.
+
+- The TakeWhile() extension method returns elements from the given collection until the specified condition is true. If the first element itself doesn't satisfy the condition then returns an empty collection.
