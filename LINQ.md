@@ -100,3 +100,102 @@
     Return s.Age >= youngAge;
   }
   ```
+
+- The Where operator (Linq extension method) filters the collection based on a given criteria expression and returns a new collection. The Where extension method has following two overloads. Both overload methods accepts a Func delegate type parameter. One overload required `Func<TSource,bool>` input parameter and second overload method required `Func<TSource, int, bool>` input parameter where int is for index
+
+```csharp
+// query syntax
+var filteredResult = from s in studentList
+                     where s.Age > 12 && s.Age < 20
+                     select s.StudentName;
+
+// Func with delegate
+Func<Student,bool> isTeenAger = delegate(Student s) {
+                                    return s.Age > 12 && s.Age < 20;
+                                };
+
+var filteredResult = from s in studentList
+                     where isTeenAger(s)
+                     select s;
+
+// method syntax with lambda
+var filteredResult = studentList.Where(s => s.Age > 12 && s.Age < 20);
+
+// overloaded one, the one with the index
+var filteredResult = studentList.Where((s, i) => {
+            if(i % 2 ==  0) // if it is even element
+                return true;
+
+        return false;
+    });
+```
+
+- The OfType operator filters the collection based on the ability to cast an element in a collection to a specified type.
+  ```csharp
+  var stringResult = mixedList.OfType<string>();
+  ```
+- OrderBy sorts the values of a collection in ascending or descending order. It sorts the collection in ascending order by default because ascending keyword is optional here. Use descending keyword to sort collection in descending order.
+
+  ```csharp
+  var orderByResult = from s in studentList
+                      orderby s.StudentName
+                      select s;
+  ```
+
+  OrderBy extension method has two overloads. First overload of OrderBy extension method accepts the Func delegate type parameter. So you need to pass the lambda expression for the field based on which you want to sort the collection.
+
+  The second overload method of OrderBy accepts object of IComparer along with Func delegate type to use custom comparison for sorting.
+
+  ```csharp
+  var studentsInAscOrder = studentList.OrderBy(s => s.StudentName);
+  var studentsInDescOrder = studentList.OrderByDescending(s => s.StudentName);
+  ```
+
+- The ThenBy and ThenByDescending extension methods are used for sorting on multiple fields.
+
+  ```csharp
+  var thenByResult = studentList.OrderBy(s => s.StudentName).ThenBy(s => s.Age);
+  ```
+
+- The grouping operators do the same thing as the GroupBy clause of SQL query. The grouping operators create a group of elements based on the given key. This group is contained in a special type of collection that implements an `IGrouping<TKey,TSource>` interface where TKey is a key value, on which the group has been formed and TSource is the collection of elements that matches with the grouping key value.
+
+  ```csharp
+  var groupedResult = studentList.GroupBy(s => s.Age);
+  ```
+
+- ToLookup is the same as GroupBy; the only difference is GroupBy execution is deferred, whereas ToLookup execution is immediate. Also, ToLookup is only applicable in Method syntax. **ToLookup is not supported in the query syntax.**
+
+  ```csharp
+  var lookupResult = studentList.ToLookup(s => s.age);
+  ```
+
+- The Join operator operates on two collections, inner collection & outer collection. It returns a new collection that contains elements from both the collections which satisfies specified expression. It is the same as inner join of SQL.
+
+  The first overload method takes five input parameters (except the first 'this' parameter): 1) outer 2) inner 3) outerKeySelector 4) innerKeySelector 5) resultSelector.
+
+  ```csharp
+  var innerJoin = studentList.Join(// outer sequence
+                      standardList,  // inner sequence
+                      student => student.StandardID,    // outerKeySelector
+                      standard => standard.StandardID,  // innerKeySelector
+                      (student, standard) => new  // result selector
+                                    {
+                                        StudentName = student.StudentName,
+                                        StandardName = standard.StandardName
+                                    });
+  ```
+
+  The GroupJoin operator performs the same task as Join operator except that GroupJoin returns a result in group based on specified group key. The GroupJoin operator joins two sequences based on key and groups the result by matching key and then returns the collection of grouped result and key.
+
+  ```csharp
+  var groupJoin = standardList.GroupJoin(studentList,  //inner sequence
+                                std => std.StandardID, //outerKeySelector
+                                s => s.StandardID,     //innerKeySelector
+                                (std, studentsGroup) => new // resultSelector
+                                {
+                                    Students = studentsGroup,
+                                    StandarFulldName = std.StandardName
+                                });
+  ```
+
+- The Select operator always returns an IEnumerable collection which contains elements based on a transformation function. It is similar to the Select clause of SQL that produces a flat result set.
