@@ -18,7 +18,7 @@
 
   **Compile time safety of queries:** It provides type checking of objects at compile time.
   IntelliSense Support: LINQ provides IntelliSense for generic collections.
-  Shaping data: You can retrieve data in different shapes.
+  Shaping data: we can retrieve data in different shapes.
 
 - There are APIs available to access third party data; for example, LINQ to Amazon provides the ability to use LINQ with Amazon web services to search for books and other items. This can be achieved by implementing the IQueryable interface for Amazon.
 
@@ -65,7 +65,7 @@
 
 - LINQ query syntax always ends with a Select or Group clause.
 
-- Method syntax (also known as fluent syntax) uses extension methods included in the Enumerable or Queryable static class, similar to how you would call the extension method of any class. Where method accepts a predicate delegate
+- Method syntax (also known as fluent syntax) uses extension methods included in the Enumerable or Queryable static class, similar to how we would call the extension method of any class. Where method accepts a predicate delegate
 
   ```csharp
   // string collection
@@ -89,46 +89,46 @@
   s => s.Age > 12 && s.Age < 20
 
   // multiple params
-  (Student s,int youngAge) => s.Age >= youngage;
+  (Student s,int wengAge) => s.Age >= wengage;
 
   // multiple statements and local variable
-  (s, youngAge) =>
+  (s, wengAge) =>
   {
     int x = 10000;
     Console.WriteLine("Lambda expression with multiple statements in the body");
 
-    Return s.Age >= youngAge;
+    Return s.Age >= wengAge;
   }
   ```
 
 - The Where operator (Linq extension method) filters the collection based on a given criteria expression and returns a new collection. The Where extension method has following two overloads. Both overload methods accepts a Func delegate type parameter. One overload required `Func<TSource,bool>` input parameter and second overload method required `Func<TSource, int, bool>` input parameter where int is for index
 
-```csharp
-// query syntax
-var filteredResult = from s in studentList
-                     where s.Age > 12 && s.Age < 20
-                     select s.StudentName;
+  ```csharp
+  // query syntax
+  var filteredResult = from s in studentList
+                      where s.Age > 12 && s.Age < 20
+                      select s.StudentName;
 
-// Func with delegate
-Func<Student,bool> isTeenAger = delegate(Student s) {
-                                    return s.Age > 12 && s.Age < 20;
-                                };
+  // Func with delegate
+  Func<Student,bool> isTeenAger = delegate(Student s) {
+                                      return s.Age > 12 && s.Age < 20;
+                                  };
 
-var filteredResult = from s in studentList
-                     where isTeenAger(s)
-                     select s;
+  var filteredResult = from s in studentList
+                      where isTeenAger(s)
+                      select s;
 
-// method syntax with lambda
-var filteredResult = studentList.Where(s => s.Age > 12 && s.Age < 20);
+  // method syntax with lambda
+  var filteredResult = studentList.Where(s => s.Age > 12 && s.Age < 20);
 
-// overloaded one, the one with the index
-var filteredResult = studentList.Where((s, i) => {
-            if(i % 2 ==  0) // if it is even element
-                return true;
+  // overloaded one, the one with the index
+  var filteredResult = studentList.Where((s, i) => {
+              if(i % 2 ==  0) // if it is even element
+                  return true;
 
-        return false;
-    });
-```
+          return false;
+      });
+  ```
 
 - The OfType operator filters the collection based on the ability to cast an element in a collection to a specified type.
   ```csharp
@@ -142,7 +142,7 @@ var filteredResult = studentList.Where((s, i) => {
                       select s;
   ```
 
-  OrderBy extension method has two overloads. First overload of OrderBy extension method accepts the Func delegate type parameter. So you need to pass the lambda expression for the field based on which you want to sort the collection.
+  OrderBy extension method has two overloads. First overload of OrderBy extension method accepts the Func delegate type parameter. So we need to pass the lambda expression for the field based on which we want to sort the collection.
 
   The second overload method of OrderBy accepts object of IComparer along with Func delegate type to use custom comparison for sorting.
 
@@ -298,7 +298,7 @@ var filteredResult = studentList.Where((s, i) => {
   bool isEqual = strList1.SequenceEqual(strList2);
   ```
 
-  The SequenceEqual extension method checks the references of two objects to determine whether two sequences are equal or not. This may give wrong result.To compare the values of two collection of complex type (reference type or object), you need to implement IEqualityComperar<T> interface as shown below.
+  The SequenceEqual extension method checks the references of two objects to determine whether two sequences are equal or not. This may give wrong result.To compare the values of two collection of complex type (reference type or object), we need to implement IEqualityComperar<T> interface as shown below.
 
   ```csharp
   class StudentComparer : IEqualityComparer<Student>
@@ -353,7 +353,7 @@ var filteredResult = studentList.Where((s, i) => {
   var distinctList1 = strList.Distinct();
   ```
 
-  The Distinct extension method doesn't compare values of complex type objects. You need to implement IEqualityComparer<T> interface in order to compare the values of complex types.
+  The Distinct extension method doesn't compare values of complex type objects. we need to implement IEqualityComparer<T> interface in order to compare the values of complex types.
 
 - `Except()` works in the same way.
 
