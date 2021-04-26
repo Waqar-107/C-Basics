@@ -449,10 +449,12 @@
   		.HasForeignKey(sc => sc.CId);
   ```
 
+- Disconnected scenario: web application
+
 - The following steps must be performed in order to insert, update or delete records into the DB table using Entity Framework Core in disconnected scenario:
 
-  Attach an entity to DbContext with an appropriate EntityState e.g. Added, Modified, or Deleted
-  Call SaveChanges() method
+  1. Attach an entity to DbContext with an appropriate EntityState e.g. Added, Modified, or Deleted
+  2. Call SaveChanges() method
 
   ```csharp
   //Disconnected entity
@@ -463,12 +465,79 @@
   		//1. Attach an entity to context with Added EntityState
   		context.Add<Student>(std);
 
-  		//or the followings are also valid
-  		// context.Students.Add(std);
-  		// context.Entry<Student>(std).State = EntityState.Added;
-  		// context.Attach<Student>(std);
-
   		//2. Calling SaveChanges to insert a new record into Students table
   		context.SaveChanges();
   }
   ```
+
+  update,
+
+  ```csharp
+  // Disconnected Student entity
+  var stud = new Student(){ StudentId = 1, Name = "Bill" };
+
+  stud.Name = "Steve";
+
+  using (var context = new SchoolContext())
+  {
+      context.Update<Student>(stud);
+      context.SaveChanges();
+  }
+  ```
+
+  The Update method sets the EntityState based on the value of the key property. If the root or child entity's key property is empty, null or default value of the specified data type then the Update() method considers it a new entity and sets its EntityState to Added
+
+  Delete,
+
+  ```csharp
+  // entity to be deleted
+  var student = new Student() {
+          StudentId = 1
+  };
+
+  using (var context = new SchoolContext())
+  {
+      context.Remove<Student>(student);
+      context.SaveChanges();
+  }
+  ```
+
+- Change tracker - responsible of tracking the state of each entity retrieved using the same DbContext instance. It is not intended to use it directly in your application code because it may change in future versions. However, you can use some methods for tracking purpose
+
+  An entity at any point of time has one of the following states which are represented by the enum Microsoft.EntityFrameworkCore.EntityState in EF Core.
+
+  1. Added
+  2. Modified
+  3. Deleted
+  4. Unchanged
+  5. Detached
+
+- Shadow properties are the properties that are not defined in your .NET entity class directly; instead, you configure it for the particular entity type in the entity data model. They can be configured in the OnModelCreating() method of the context class.
+
+  You can define the shadow properties for an entity type using the Fluent API in the OnModelCreating() using the Property() method
+
+  ```csharp
+  protected override void OnModelCreating(ModelBuilder modelBuilder) {
+      modelBuilder.Entity<Student>().Property<DateTime>("CreatedDate");
+      modelBuilder.Entity<Student>().Property<DateTime>("UpdatedDate");
+  }
+
+  using (var context = new SchoolContext())
+  {
+      var std = new Student(){ StudentName = "Bill"  };
+
+      // sets the value to the shadow property
+      context.Entry(std).Property("CreatedDate").CurrentValue = DateTime.Now;
+
+      // gets the value of the shadow property
+      var createdDate = context.Entry(std).Property("CreatedDate").CurrentValue;
+  }
+  ```
+
+  Shadow properties can be used in two scenarios:
+
+  1. When you don't want to expose database columns on the mapped entities.
+
+  2. When you don't want to expose foreign key property and want to manage relationship only using navigation properties. The foreign key property will be shadow property and mapped to the database column but will not be exposed as a property of an entity
+
+- By defining `CreatedDate` and `UpdatedDate` properties in entity classes.
