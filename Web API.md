@@ -129,7 +129,7 @@
   1.  Void - sends `204` or `no content` status.
   2.  Primitive type or Complex type
   3.  HttpResponseMessage
-  4.  IHttpActionResul
+  4.  IHttpActionResult
 
 - Creating custom results,
 
