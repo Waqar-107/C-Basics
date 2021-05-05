@@ -160,3 +160,5 @@
 - In HTTP request, MIME type is specified in the request header using Accept and Content-Type attribute.
 
 - Web API includes filters to add extra logic before or after action method executes. Filters can be used to provide cross-cutting features such as logging, exception handling, performance measurement, authentication and authorization.
+
+  Every filter attribute class must implement IFilter interface included in `System.Web.Http.Filters` namespace.
