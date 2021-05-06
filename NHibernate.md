@@ -2,6 +2,8 @@
 
 - From Nuget package manager `install-package NHibernate`
 
+- The application code uses the NHibernate ISession and IQuery APIs for persistence operations and only has to manage database transactions, ideally using the NHibernate ITransaction API.The application code uses the NHibernate ISession and IQuery APIs for persistence operations and only has to manage database transactions, ideally using the NHibernate ITransaction API.
+
 - Create
 
   ```csharp
@@ -107,3 +109,54 @@
   	<property name = "Country"/>
   </component>
   ```
+
+- One-to_Many relation,
+
+  ```csharp
+  // a customer can have many orders
+  // Orders is the classname, order is the table name in db
+  <set name = "Orders" table = "`Order`">
+  		<key column = "CustomerId"/>
+  		<one-to-many class = "Order"/>
+  </set>
+  ```
+
+  We can use `Bag` if we need a multi-set.
+
+- There are different options for cascading, which are as follows −
+
+  1.  **none** − which is the default and it means no cascading.
+
+  2.  **all** − which is going to cascade saves, updates, and deletes.
+
+  3.  **save-update** − it will cascade, saves and updates.
+
+  4.  **delete** − it will cascade deletes.
+
+  5.  **all-delete-orphan** − it is a special one which is quite frequently used and is the same as All Except, if it finds Delete-orphan rows, it will delete those as well.
+
+- Inverse Relationships,
+
+  Let’s say you have a bidirectional associations using a single foreign key.
+
+  1.  From a relational standpoint, you have got one foreign key, and it represents both customer to order and orders to customer.
+
+  2.  From the OO model, you have unidirectional associations using these references.
+
+  3.  There is nothing that says that two unidirectional associations represent the same bidirectional association in the database.
+
+  4.  The problem here is that NHibernate doesn't have enough information to know that customer.orders and order.customer represent the same relationship in the database.
+
+  5.  We need to provide inverse equals true as a hint, it is because the unidirectional associations are using the same data.
+
+  6.  If we try to save these relationships that have 2 references to them, NHibernate will try to update that reference twice.
+
+  7.  It will actually do an extra roundtrip to the database, and it will also have 2 updates to that foreign key.
+
+  8.  The inverse equals true tells NHibernate which side of the relationship to ignore.
+
+  9.  When you apply it to the collection side and NHibernate will always update the foreign key from the other side, from the child object side.
+
+  10. Then we only have one update to that foreign key and we don't have additional updates to that data.
+
+  11. This allows us to prevent these duplicate updates to the foreign key and it also helps us to prevent foreign key violations.
