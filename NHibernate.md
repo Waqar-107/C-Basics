@@ -215,7 +215,7 @@
                          .Where(x => x.FirstName == "Laverne");
   ```
 
-- Executing rae queries
+- Executing raw queries
   ```csharp
   IQuery sqlQuery = session.CreateSQLQuery("SELECT * FROM \
                                             CUSTOMER").AddEntity(typeof(Customer));
